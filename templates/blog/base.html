@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>1-dars</title>
+</head>
+<body>
+<h1>Hello python!</h1>
+<hr>
+{% if c %}
+<h2>{{ a }} + {{ b }} = {{ c }}</h2>
+{% else %}
+<h2>Hech qanday ma'lumot yo'q</h2>
+{% endif %}
+<hr>
+<h2>Talabalar ro'yxati</h2>
+<ol>
+    {% for student in students %}
+    <li style="font-size: 20px">
+        {% if student.payed %}
+        ✅
+        {% else %}
+        ❌
+        {% endif %}
+
+        {{ student.first_name }} {{ student.last_name }}
+    </li>
+    {% endfor %}
+</ol>
+</body>
+</html>
