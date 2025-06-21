@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -5,30 +6,31 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>1-dars</title>
+
+{#    <link rel="stylesheet" href="{% static 'blog/main.css' %}">#}
+
+    <title>{% block title %} {% endblock %}</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
 </head>
 <body>
-<h1>Hello python!</h1>
-<hr>
-{% if c %}
-<h2>{{ a }} + {{ b }} = {{ c }}</h2>
-{% else %}
-<h2>Hech qanday ma'lumot yo'q</h2>
-{% endif %}
-<hr>
-<h2>Talabalar ro'yxati</h2>
-<ol>
-    {% for student in students %}
-    <li style="font-size: 20px">
-        {% if student.payed %}
-        ✅
-        {% else %}
-        ❌
-        {% endif %}
 
-        {{ student.first_name }} {{ student.last_name }}
-    </li>
-    {% endfor %}
-</ol>
+{% include 'blog/navbar.html' %}
+
+<div class="container">
+    {% block content %}
+
+    {% endblock %}
+</div>
+
+{% include 'blog/footer.html' %}
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.min.js"
+        integrity="sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D"
+        crossorigin="anonymous"></script>
 </body>
 </html>

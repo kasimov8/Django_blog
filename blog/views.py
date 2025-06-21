@@ -1,33 +1,47 @@
 from dataclasses import dataclass
+from django.shortcuts import render, get_object_or_404, redirect
 
-from django.http import HttpResponse
-from django.shortcuts import render
-import random
-
-@dataclass
-class Students:
-    first_name: str
-    last_name: str
-    phone: str
-    payed: bool
-
-st1 = Students("ALi", "Aliyev", "+998947892424", True)
-st2 = Students("G'ani", "G'aniyev", "+998931234567", False)
-st3 = Students("Vali", "Valiyev", "+998904567890", True)
-st4 = Students("Eshmat", "Eshmatov", "+998881082121", True)
-
-students = [st1, st2, st3, st4]
+from blog.forms import FormsBlog
+from blog.models import Blog
 
 def home(request):
-    a = random.randint(1, 100)
-    b = random.randint(101, 1000)
-    c = a + b
-
     context = {
-        'a': a,
-        'b': b,
-        'c': c,
-        'students': students
+        'blogs': Blog.objects.filter(is_active=True)
     }
 
-    return render(request, template_name='blog/base.html', context=context)
+    return render(request, template_name='blog/home.html', context=context)
+
+def inactive(request):
+    context = {
+        'blogs': Blog.objects.filter(is_active=False)
+    }
+
+    return render(request, template_name='blog/inactive.html', context=context)
+
+
+def about(request):
+    context = {
+    }
+    return render(request, template_name='blog/about.html', context=context)
+
+def detail(request, blog_id):
+    blog = get_object_or_404(Blog, id=blog_id)
+    context = {
+        "blog": blog
+    }
+    return render(request, template_name='blog/detail.html', context=context)
+
+def update(request, blog_id):
+    blog = get_object_or_404(Blog, id=blog_id)
+    if request.method == 'POST':
+        form = FormsBlog(request.POST, request.FILES, instance=blog)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = FormsBlog(instance=blog)
+    context = {
+        "form": form,
+        "blog": blog
+    }
+    return render(request, 'blog/update.html', context=context)
