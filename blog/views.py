@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
 
 from blog.forms import FormsBlog
 from blog.models import Blog
@@ -36,10 +37,12 @@ def update(request, blog_id):
     if request.method == 'POST':
         form = FormsBlog(request.POST, request.FILES, instance=blog)
         if form.is_valid():
-            form.save()
+            blog = form.save()
+            messages.success(request, message=f"{blog.title} o'zgartirildi!")
             return redirect('home')
     else:
         form = FormsBlog(instance=blog)
+
     context = {
         "form": form,
         "blog": blog
@@ -57,8 +60,11 @@ def create(request):
         form = FormsBlog(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            blog = form.save()
+            messages.success(request, message=f"{blog.title} yaratildi!")
             return redirect('home')
     else:
+        messages.warning(request, message=f"Hozirda biz test rejimida ishlayapmiz!")
         form = FormsBlog()
 
 
