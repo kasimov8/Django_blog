@@ -8,7 +8,8 @@
 
     {% include 'blog/section.html' %}
 
-    <h2>Bloglar soni {{ blogs.count }} ta</h2>
+    <span class="fs-2 fw-medium">Bloglar soni {{ blogs.count }} ta</span>
+    <a href="{% url 'create' %}" class="btn btn-outline-success float-end">+ Add blog</a>
 
     <div class="album py-5 bg-body-tertiary">
         <div class="container">
@@ -17,7 +18,7 @@
                     <div class="col">
                         <div class="card shadow-sm">
                             {% if blog.image %}
-                                <img class="image-content" src="{{ blog.image.url }}" alt="rasm">
+                                <img class="h-225" src="{{ blog.image.url }}" alt="rasm">
                             {% else %}
                                 <svg aria-label="Placeholder: Thumbnail" class="bd-placeholder-img card-img-top"
                                      height="225"

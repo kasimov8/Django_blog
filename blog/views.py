@@ -51,3 +51,18 @@ def delete(request, blog_id):
     blog.delete()
     return redirect('home')
 
+
+def create(request):
+    if request.method == 'POST':
+        form = FormsBlog(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = FormsBlog()
+
+
+    context = {
+        "form" : form
+    }
+    return render(request, 'blog/create_blog.html', context=context)
